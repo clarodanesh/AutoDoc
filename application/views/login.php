@@ -13,7 +13,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 
 <div id="auth-form-container">
-    <form class="auth-form" action="">
+    <!--<form class="auth-form" action="">-->
+    <?php echo form_open('Login_controller/CheckLogin');?>
+    <div class="auth-form">
         <div id="auth-form-title">Login to AutoDoc</div>
         <img id="auth-form-logo" src="<?php echo base_url(); ?>images/logo.png"/>
         <div id="auth-form-hint">Use your Email and Password</div>
@@ -28,7 +30,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="auth-form-question">Not signed up? <a href="#">Sign up</a></div>
 
         <input class="auth-form-primary-btn" type="submit" value="Login">
-    </form>
+    </div>
+    <!--</form>-->
+    <?php echo form_close();?>
 </div>
  
 </body>
