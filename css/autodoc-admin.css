@@ -1,0 +1,31 @@
+body{
+    margin: 0;
+}
+
+#admin-side-panel{
+    width: 300px;
+    height: 100%;
+    background-color: #3394FF;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#admin-panel-header{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color:   #3394FF;
+    color: #FFFFFF;
+}
+
+.side-panel-link{
+    background-color: #3394FF;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #FFFFFF;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid #FFFFFF;
+}

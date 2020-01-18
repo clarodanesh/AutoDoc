@@ -29,11 +29,11 @@ class Login_controller extends CI_Controller {
 	    
 	    //if the session with email and userType are set then open that user session type page
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
-	        echo 'email and utype are set';
-	        echo $this->session->email;
-	        echo $this->session->uType;
+	        //echo 'email and utype are set';
+	        //echo $this->session->email;
+	        //echo $this->session->uType;
 	        if($this->session->uType == 'admin'){
-	            echo 'you are an admin';
+	            redirect('/Admin_controller');
 	        }
 	        else if($this->session->uType == 'doctor'){
 	            echo 'you are a doctor';
@@ -71,7 +71,19 @@ class Login_controller extends CI_Controller {
             $this->session->set_userdata('uType', $uType);
             
             //$this->session->sess_destroy();
-	        redirect('/Test_controller'); //will successfully go to a new controller and method when called
+            if($uType == 'admin'){
+                redirect('/Admin_controller');
+            }
+            else if($uType == 'doctor'){
+                redirect('/Doctor_controller');
+            }
+            else if($uType == 'user'){
+                redirect('/User_controller');
+            }
+            else{
+                echo 'user type not recognised';
+            }
+	        //will successfully go to a new controller and method when called
 	        /*$this->load->view('<?php echo base_url(); ?>Check_controller/hello');*/
 	    }else{
 	        echo 'no';
