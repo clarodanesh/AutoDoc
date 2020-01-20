@@ -20,7 +20,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class='side-panel-link'>View doctors</div>
     <div class='side-panel-link'>View patients</div>
     <div class='side-panel-link'>View requests</div>
-    <a href='<?php echo base_url(); ?>index.php/Admin_controller/logout'>Log Out</a>
+    <a href='<?php echo base_url()?>index.php/Admin_controller/logout' id='logout-btn'><div class='side-panel-link'>Log Out</div></a>
+</div>
+
+<div id='main-content'>
+    <div id='main-header'></div>
 </div>
 
 </body>
