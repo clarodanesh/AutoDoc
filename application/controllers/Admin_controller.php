@@ -52,4 +52,8 @@ class Admin_controller extends CI_Controller {
 	    $this->session->sess_destroy();
 	    redirect('/');
 	}
+	
+	public function ManageDoctors(){
+	    $this->load->view('manage_doctors');
+	}
 }

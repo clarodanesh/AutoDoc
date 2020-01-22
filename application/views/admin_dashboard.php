@@ -17,14 +17,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div id='admin-side-panel'>
     <div id='admin-panel-header'>Admin Panel</div>
-    <div class='side-panel-link'>View doctors</div>
-    <div class='side-panel-link'>View patients</div>
-    <div class='side-panel-link'>View requests</div>
+    <div class='side-panel-link'>Manage doctors</div>
+    <div class='side-panel-link'>Manage patients</div>
+    <div class='side-panel-link'>Manage requests</div>
+    <div class='side-panel-link'>Manage Appointments</div>
     <a href='<?php echo base_url()?>index.php/Admin_controller/logout' id='logout-btn'><div class='side-panel-link'>Log Out</div></a>
 </div>
 
 <div id='main-content'>
-    <div id='main-header'></div>
+    <div id='main-header'>Dashboard</div>
+    <div class='admin-board-container'>
+        <?php echo anchor('Admin_controller/ManageDoctors', "<div class='admin-board-header'>Doctors</div><div class='admin-board-content'></div>", 'class="admin-board"');?>
+        
+        <div class='admin-board right-admin-board'>
+            <div class='admin-board-header'>Patients</div>
+            <div class='admin-board-content'></div>
+        </div>
+    </div>
+    <div class='admin-board-container' id='bottom-admin-board-container'>
+        <div class='admin-board'>
+            <div class='admin-board-header'>Requests</div>
+            <div class='admin-board-content'></div>
+        </div>
+        <div class='admin-board right-admin-board'>
+            <div class='admin-board-header'>Appointments</div>
+            <div class='admin-board-content'></div>
+        </div>
+    </div>
 </div>
 
 </body>
