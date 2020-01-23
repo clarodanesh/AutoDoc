@@ -52,41 +52,56 @@ class Register_controller extends CI_Controller {
 	
 	public function AttemptRegister(){
 	    $this->load->model('Register_model');
-	    $data = array(
-	            'email' => $this->input->post('email'),
-	            'password' => $this->input->post('password'),
-	            'firstname' => $this->input->post('firstname'),
-	            'lastname' => $this->input->post('lastname'),
-	            'utype' => 'user'
-	    );
 	    
-	    $affRows = $this->Register_model->set_user($data);
-	    if($affRows > 0){
-	        echo 'yes';
-            
-            $uType = 'user';
-            
-            $this->session->set_userdata('email', $this->input->post('email')); 
-            $this->session->set_userdata('uType', $uType);
-            
-            //$this->session->sess_destroy();
-            if($uType == 'admin'){
-                redirect('/Admin_controller');
-            }
-            else if($uType == 'doctor'){
-                redirect('/Doctor_controller');
-            }
-            else if($uType == 'user'){
-                redirect('/User_controller');
-            }
-            else{
-                echo 'user type not recognised';
-            }
-	        //will successfully go to a new controller and method when called
-	        /*$this->load->view('<?php echo base_url(); ?>Check_controller/hello');*/
+	    $email = $this->input->post('email');
+	    $password = $this->input->post('password');
+	    $firstname = $this->input->post('firstname');
+	    $lastname = $this->input->post('lastname');
+	    
+	    if($email && $password && $firstname && $lastname){
+	        $passHash = password_hash($password, PASSWORD_DEFAULT);
+	        
+	        //check if all the variables are set
+	        $data = array(
+	                'email' => $email,
+	                'password' => $passHash,
+	                'firstname' => $firstname,
+	                'lastname' => $lastname,
+	                'utype' => 'user'
+	        );
+	        
+	        $affRows = $this->Register_model->set_user($data);
+	        if($affRows > 0){
+	            echo 'yes';
+                
+                $uType = 'user';
+                
+                $this->session->set_userdata('email', $email); 
+                $this->session->set_userdata('uType', $uType);
+                
+                //$this->session->sess_destroy();
+                if($uType == 'admin'){
+                    redirect('/Admin_controller');
+                }
+                else if($uType == 'doctor'){
+                    redirect('/Doctor_controller');
+                }
+                else if($uType == 'user'){
+                    redirect('/User_controller');
+                }
+                else{
+                    echo 'user type not recognised';
+                }
+	            //will successfully go to a new controller and method when called
+	            /*$this->load->view('<?php echo base_url(); ?>Check_controller/hello');*/
+	        }else{
+	            echo 'no';
+	            $viewData['error'] = 'Unable to submit data';
+	            $this->load->view('register', $viewData); //here pass a variable with the error in, then in the view make a empty div to hold the error variable 
+	        }
 	    }else{
-	        echo 'no';
-	        $this->load->view('register');
+	        $viewData['error'] = 'Please fill in the whole form';
+	        $this->load->view('register', $viewData);
 	    }
 	}   
 }

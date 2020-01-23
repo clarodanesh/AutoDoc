@@ -19,6 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="auth-form-title">Login to AutoDoc</div>
         <img id="auth-form-logo" src="<?php echo base_url(); ?>images/logo.png"/>
         <div id="auth-form-hint">Use your Email and Password</div>
+        <div id="auth-form-error"><?php if(isset($error)){echo $error;} ?></div>
         <div class="auth-form-section">
             <input class="auth-form-input" type="text" name="email" placeholder="Email">
         </div>

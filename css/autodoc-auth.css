@@ -23,6 +23,14 @@ body{
     margin-bottom: 10px;
 }
 
+#auth-form-error{
+    font-size: 0.8rem;
+    font-family: 'Ubuntu', sans-serif;
+    margin-bottom: 0;
+    height: 15px;
+    color: #FF0000;
+}
+
 #auth-form-question{
     font-size: 0.8rem;
     font-family: 'Ubuntu', sans-serif;

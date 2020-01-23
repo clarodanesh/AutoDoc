@@ -52,9 +52,13 @@ class Login_controller extends CI_Controller {
 	
 	public function CheckLogin(){
 	    $this->load->model('Login_model');
+	    
+	    $email = $this->input->post('email');
+	    $password = $this->input->post('password');
+	    
 	    $data = array(
-	            'email' => $this->input->post('email'),
-	            'password' => $this->input->post('password')
+	            'email' => $email,
+	            'password' => $password
 	    );
 	    
 	    $user = $this->Login_model->check_user($data);
@@ -64,30 +68,40 @@ class Login_controller extends CI_Controller {
                 $data[] = $row;
             }          
             
-            $Email = $data['0']->email;
-            $uType = $data['0']->utype;
+            //echo $data['0']->password;
+            //echo '</br>';
+            //echo password_verify($password, $data['0']->password);
             
-            $this->session->set_userdata('email', $Email); 
-            $this->session->set_userdata('uType', $uType);
-            
-            //$this->session->sess_destroy();
-            if($uType == 'admin'){
-                redirect('/Admin_controller');
-            }
-            else if($uType == 'doctor'){
-                redirect('/Doctor_controller');
-            }
-            else if($uType == 'user'){
-                redirect('/User_controller');
-            }
-            else{
-                echo 'user type not recognised';
+            if(password_verify($password, $data['0']->password)){
+                $Email = $data['0']->email;
+                $uType = $data['0']->utype;
+                
+                $this->session->set_userdata('email', $Email); 
+                $this->session->set_userdata('uType', $uType);
+                
+                //$this->session->sess_destroy();
+                if($uType == 'admin'){
+                    redirect('/Admin_controller');
+                }
+                else if($uType == 'doctor'){
+                    redirect('/Doctor_controller');
+                }
+                else if($uType == 'user'){
+                    redirect('/User_controller');
+                }
+                else{
+                    echo 'user type not recognised';
+                }
+            }else{
+                $viewData['error'] = 'Incorrect details';
+                $this->load->view('login', $viewData);
             }
 	        //will successfully go to a new controller and method when called
 	        /*$this->load->view('<?php echo base_url(); ?>Check_controller/hello');*/
 	    }else{
 	        echo 'no';
-	        $this->load->view('login');
+	        $viewData['error'] = 'User does not exist';
+	        $this->load->view('login', $viewData);
 	    }
 	}   
 }
