@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="auth-form-hint">Create an account with AutoDoc</div>
         <div id="auth-form-error"><?php if(isset($error)){echo $error;} ?></div>
         <div class="auth-form-section">
-            <input class="auth-form-input" type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email" required>
+            <input class="auth-form-input" type="text" name="email" placeholder="Email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email" required>
         </div>
         
         <div class="auth-form-section">
@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
 
         <div class="auth-form-section">
-            <input class="auth-form-input" type="password" name="password" placeholder="Password" pattern=".{7,}" title="Enter six or more characters" required>
+            <input class="auth-form-input" type="password" name="password" placeholder="Password" id="password" pattern=".{7,}" title="Enter six or more characters" required>
         </div>
 
         <div id="auth-form-question">Already registered? <a href="<?php echo base_url()?>index.php/Login_controller">Login</a></div>
