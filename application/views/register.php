@@ -9,6 +9,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<title>Register - AutoDoc</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/autodoc-auth.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+    
+    <script src="<?php echo base_url(); ?>js/jquery.min.js"></script>
 </head>
 <body>
 
@@ -21,28 +23,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="auth-form-hint">Create an account with AutoDoc</div>
         <div id="auth-form-error"><?php if(isset($error)){echo $error;} ?></div>
         <div class="auth-form-section">
-            <input class="auth-form-input" type="text" name="email" placeholder="Email">
+            <input class="auth-form-input" type="text" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email" required>
         </div>
         
         <div class="auth-form-section">
-            <input class="auth-form-input" type="text" name="firstname" placeholder="Firstname">
+            <input class="auth-form-input" type="text" name="firstname" placeholder="Firstname" required>
         </div>
         
         <div class="auth-form-section">
-            <input class="auth-form-input" type="text" name="lastname" placeholder="Lastname">
+            <input class="auth-form-input" type="text" name="lastname" placeholder="Lastname" required>
         </div>
 
         <div class="auth-form-section">
-            <input class="auth-form-input" type="password" name="password" placeholder="Password">
+            <input class="auth-form-input" type="password" name="password" placeholder="Password" pattern=".{7,}" title="Enter six or more characters" required>
         </div>
 
         <div id="auth-form-question">Already registered? <a href="<?php echo base_url()?>index.php/Login_controller">Login</a></div>
 
-        <input class="auth-form-primary-btn" type="submit" value="Register">
+        <input class="auth-form-primary-btn" id="register-btn" type="submit" value="Register">
     </div>
     <!--</form>-->
     <?php echo form_close();?>
 </div>
- 
+
+<script src="<?php echo base_url(); ?>js/validation.js"></script>
+<script src="<?php echo base_url(); ?>js/register.js"></script>
 </body>
 </html>

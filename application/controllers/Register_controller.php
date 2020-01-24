@@ -53,12 +53,16 @@ class Register_controller extends CI_Controller {
 	public function AttemptRegister(){
 	    $this->load->model('Register_model');
 	    
-	    $email = $this->input->post('email');
-	    $password = $this->input->post('password');
-	    $firstname = $this->input->post('firstname');
-	    $lastname = $this->input->post('lastname');
+	    //filter_var($str, FILTER_SANITIZE_STRING)
+	    //filter_var($email, FILTER_SANITIZE_EMAIL)
 	    
-	    if($email && $password && $firstname && $lastname){
+	    $email = filter_var($this->input->post('email'), FILTER_SANITIZE_EMAIL);
+	    $password = $this->input->post('password');
+	    $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
+	    $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
+	    $passLength = strlen($password);
+	    
+	    if(filter_var($email, FILTER_VALIDATE_EMAIL) && $password && $firstname && $lastname && $passLength > 6){
 	        $passHash = password_hash($password, PASSWORD_DEFAULT);
 	        
 	        //check if all the variables are set
@@ -70,38 +74,58 @@ class Register_controller extends CI_Controller {
 	                'utype' => 'user'
 	        );
 	        
-	        $affRows = $this->Register_model->set_user($data);
-	        if($affRows > 0){
-	            echo 'yes';
-                
-                $uType = 'user';
-                
-                $this->session->set_userdata('email', $email); 
-                $this->session->set_userdata('uType', $uType);
-                
-                //$this->session->sess_destroy();
-                if($uType == 'admin'){
-                    redirect('/Admin_controller');
-                }
-                else if($uType == 'doctor'){
-                    redirect('/Doctor_controller');
-                }
-                else if($uType == 'user'){
-                    redirect('/User_controller');
-                }
-                else{
-                    echo 'user type not recognised';
-                }
-	            //will successfully go to a new controller and method when called
-	            /*$this->load->view('<?php echo base_url(); ?>Check_controller/hello');*/
+	        if($this->IsUserUnique($email)){
+	            $affRows = $this->Register_model->set_user($data);
+	            if($affRows > 0){
+	                echo 'yes';
+                    
+                    $uType = 'user';
+                    
+                    $this->session->set_userdata('email', $email); 
+                    $this->session->set_userdata('uType', $uType);
+                    
+                    //$this->session->sess_destroy();
+                    if($uType == 'admin'){
+                        redirect('/Admin_controller');
+                    }
+                    else if($uType == 'doctor'){
+                        redirect('/Doctor_controller');
+                    }
+                    else if($uType == 'user'){
+                        redirect('/User_controller');
+                    }
+                    else{
+                        echo 'user type not recognised';
+                    }
+	                //will successfully go to a new controller and method when called
+	                /*$this->load->view('<?php echo base_url(); ?>Check_controller/hello');*/
+	            }else{
+	                echo 'no';
+	                $viewData['error'] = 'Unable to set data. Try again';
+	                $this->load->view('register', $viewData); //here pass a variable with the error in, then in the view make a empty div to hold the error variable 
+	            }
 	        }else{
-	            echo 'no';
-	            $viewData['error'] = 'Unable to submit data';
-	            $this->load->view('register', $viewData); //here pass a variable with the error in, then in the view make a empty div to hold the error variable 
+	            $viewData['error'] = 'Use a unique email';
+	            $this->load->view('register', $viewData);  
 	        }
 	    }else{
-	        $viewData['error'] = 'Please fill in the whole form';
+	        $viewData['error'] = 'Please fill the form correctly';
 	        $this->load->view('register', $viewData);
 	    }
-	}   
+	}  
+	
+	public function IsUserUnique($e){
+	    $this->load->model('Register_model');
+	
+	    $data = array(
+	        'email' => $e
+	    );
+	
+	    $user = $this->Register_model->get_users($data);
+	    if($user->num_rows() > 0){
+	        return false;
+	    }else{
+	        return true;
+	    }
+	} 
 }

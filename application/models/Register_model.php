@@ -10,5 +10,11 @@ class Register_model extends CI_Model{
         $this->db->insert('users', $data);
         return $this->db->affected_rows();
     }
+    
+    function get_users($data){
+    //, 'password'=> $data['password']
+        $query = $this->db->get_where('users', array('email'=> $data['email']),1,0);
+        return $query;
+    }
 }
 ?>    
