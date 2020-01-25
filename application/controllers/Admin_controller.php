@@ -31,6 +31,7 @@ class Admin_controller extends CI_Controller {
 	        //echo $this->session->email;
 	        //echo $this->session->uType;
 	        if($this->session->uType == 'admin'){
+	            $this->load->view('admin_panel');
 	            $this->load->view('admin_dashboard');
 	        }
 	        else if($this->session->uType == 'doctor'){
@@ -54,6 +55,7 @@ class Admin_controller extends CI_Controller {
 	}
 	
 	public function ManageDoctors(){
+	    $this->load->view('admin_panel');
 	    $this->load->view('manage_doctors');
 	}
 }
