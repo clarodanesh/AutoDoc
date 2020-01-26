@@ -55,7 +55,27 @@ class Admin_controller extends CI_Controller {
 	}
 	
 	public function ManageDoctors(){
+	    $this->load->model('Admin_model');
+	
 	    $this->load->view('admin_panel');
-	    $this->load->view('manage_doctors');
+	    
+	    $doctors = $this->Admin_model->GetDoctors();
+	    if($doctors->num_rows() > 0){
+	        foreach ($doctors->result() as $row){
+                $data[] = $row;
+            } 
+            
+            $viewData['docInfo'] = $data;
+            $this->load->view('manage_doctors', $viewData);
+	    }	    
+	    
+	    
+	}
+	
+	public function DeleteDoc(){
+	    $id = $this->uri->segment(3);
+	    $this->load->model('Admin_model');
+	    $this->Admin_model->DeleteDoctor($id);
+	    redirect('/Admin_controller/ManageDoctors');
 	}
 }

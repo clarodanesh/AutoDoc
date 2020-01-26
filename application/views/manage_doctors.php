@@ -22,22 +22,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <input class='admin-action-search' type="text" placeholder="Search">
     </div>
     <div id='admin-frame'>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
-        <div class='frame-cards'></div>
+        <?php foreach($docInfo as $doctor):?>
+            <div class="frame-cards">
+                <div class="frame-card-info-container">
+                    <div class="frame-card-cont-text">Dr. <?php echo $doctor->firstname;?> <?php echo $doctor->lastname;?></div>
+                    <div class="frame-card-cont-text"><?php echo $doctor->email;?></div>
+                </div>
+                <div class="frame-card-buttons-container">
+                    <a class="frame-card-button" <?php echo 'id="'.$doctor->email.'"'?>>&#9998</a>
+                    <a href="<?php echo base_url() . "index.php/Admin_controller/DeleteDoc/" . $doctor->id; ?>" class="frame-card-button">&#10799</a>
+                </div>
+            </div>
+        <?php endforeach;?>
     </div>
 </div>
 
