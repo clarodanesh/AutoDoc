@@ -67,9 +67,10 @@ class Admin_controller extends CI_Controller {
             
             $viewData['docInfo'] = $data;
             $this->load->view('manage_doctors', $viewData);
-	    }	    
-	    
-	    
+	    }else{
+	        $viewData['docInfo'] = "empty";
+	        $this->load->view('manage_doctors', $viewData); 
+	    }
 	}
 	
 	public function DeleteDoc(){

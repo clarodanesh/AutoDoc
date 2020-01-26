@@ -22,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <input class='admin-action-search' type="text" placeholder="Search">
     </div>
     <div id='admin-frame'>
-        <?php if($docInfo=="empty"){return null;}foreach($docInfo as $doctor):?>
+        <?php foreach($docInfo as $doctor):?>
             <div class="frame-cards">
                 <div class="frame-card-info-container">
                     <div class="frame-card-cont-text">Dr. <?php echo $doctor->firstname;?> <?php echo $doctor->lastname;?></div>
