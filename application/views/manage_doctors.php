@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div id='main-content'>
     <div id='main-header'>Manage Doctors</div>
     <div id='admin-action-container'>
-        <a href='#' class='admin-action-btn' id='add-btn'>Add</a>
+        <a href="<?php echo base_url() . "index.php/Admin_controller/AddDoc" ?>" class='admin-action-btn' id='add-btn'>Add</a>
         <input class='admin-action-search' type="text" placeholder="Search">
     </div>
     <div id='admin-frame'>
@@ -29,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="frame-card-cont-text"><?php echo $doctor->email;?></div>
                 </div>
                 <div class="frame-card-buttons-container">
-                    <a class="frame-card-button" <?php echo 'id="'.$doctor->email.'"'?>>&#9998</a>
+                    <a href="<?php echo base_url() . "index.php/Admin_controller/ShowForm/" . $doctor->id; ?>" class="frame-card-button">&#9998</a>
                     <a href="<?php echo base_url() . "index.php/Admin_controller/DeleteDoc/" . $doctor->id; ?>" class="frame-card-button">&#10799</a>
                 </div>
             </div>

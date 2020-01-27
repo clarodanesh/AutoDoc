@@ -14,5 +14,10 @@ class Admin_model extends CI_Model{
     function DeleteDoctor($id){
         $this->db->delete('users', array('id' => $id));
     }
+    
+    function UpdateDoctor($id, $data){
+        $this->db->where('id', $id);
+        $this->db->update('users', $data);
+    }
 }
 ?>    

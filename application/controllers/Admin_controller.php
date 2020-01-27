@@ -79,4 +79,25 @@ class Admin_controller extends CI_Controller {
 	    $this->Admin_model->DeleteDoctor($id);
 	    redirect('/Admin_controller/ManageDoctors');
 	}
+	
+	public function ShowForm(){
+	    $this->load->view('admin_modal_form');
+	    $this->ManageDoctors();
+	}
+	
+	public function UpdateDoctor(){	
+	    $id = $this->uri->segment(3);
+	    $this->load->model('Admin_model');
+	    $this->input->post('email');
+	    
+	    $data = array(
+	        'email' => $this->input->post('email'),
+	        'firstname' => $this->input->post('firstname'),
+	        'lastname' => $this->input->post('lastname')
+	    );
+	    
+	    $this->Admin_model->UpdateDoctor($id, $data);
+	    redirect('/Admin_controller/ManageDoctors');
+	   //$this->Admin_model->UpdateDoctor($id);
+	}
 }
