@@ -59,6 +59,10 @@ class Admin_controller extends CI_Controller {
 	
 	    $this->load->view('admin_panel');
 	    
+	    if(!$this->session->has_userdata('refFrom')){
+	        $this->session->set_userdata('refFrom', current_url());
+	    }
+	    
 	    $doctors = $this->Admin_model->GetDoctors();
 	    if($doctors->num_rows() > 0){
 	        foreach ($doctors->result() as $row){
@@ -99,5 +103,10 @@ class Admin_controller extends CI_Controller {
 	    $this->Admin_model->UpdateDoctor($id, $data);
 	    redirect('/Admin_controller/ManageDoctors');
 	   //$this->Admin_model->UpdateDoctor($id);
+	}
+	
+	public function CancelUpdate(){
+	    $refFrom = $this->session->userdata('refFrom');
+	    redirect($refFrom, 'refresh');
 	}
 }

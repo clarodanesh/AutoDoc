@@ -32,7 +32,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <input class="admin-modal-form-input" type="text" name="lastname" id="lastname" placeholder="Lastname" required>
             </div>
             
-            <input class="admin-form-primary-btn" id="login-btn" type="submit" value="Edit">
+            <div class="modal-form-btn-container">
+                <a href="<?php echo base_url() . "index.php/Admin_controller/CancelUpdate"  ?>" class="admin-form-secondary-btn">Cancel</a>
+                <input class="admin-form-primary-btn" id="login-btn" type="submit" value="Edit">
+            </div>
         </div>
     <?php echo form_close();?>
 </div>
