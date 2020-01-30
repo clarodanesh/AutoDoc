@@ -9,6 +9,8 @@ body{
     height: 100%;
     background-color: #3394FF;
     font-family: 'Ubuntu', sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
 #admin-panel-header{
@@ -32,6 +34,7 @@ body{
     margin-left: 5px;
     margin-right: 5px;
     border: 1px solid #FFFFFF;
+    text-decoration: none;
 }
 
 .side-panel-link:hover{

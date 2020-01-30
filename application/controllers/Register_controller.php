@@ -63,7 +63,7 @@ class Register_controller extends CI_Controller {
 	    $passLength = strlen($password);
 	    
 	    if(filter_var($email, FILTER_VALIDATE_EMAIL) && $password && $firstname && $lastname && $passLength > 6){
-	        $passHash = password_hash($password, PASSWORD_DEFAULT);
+	        $passHash = password_hash($password, PASSWORD_BCRYPT);
 	        
 	        //check if all the variables are set
 	        $data = array(

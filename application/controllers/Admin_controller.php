@@ -23,7 +23,13 @@ class Admin_controller extends CI_Controller {
         $this->load->helper('url');   
         $this->load->library('session');     
     }
-
+    /*
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    
+	    }else{
+	        $this->load->view('login');
+	    }
+	*/
 	public function index()
 	{
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
@@ -35,13 +41,13 @@ class Admin_controller extends CI_Controller {
 	            $this->load->view('admin_dashboard');
 	        }
 	        else if($this->session->uType == 'doctor'){
-	            echo 'you are a doctor';
+	            $this->load->view('login');
 	        }
 	        else if($this->session->uType == 'user'){
-	            echo 'you are a user';
+	            $this->load->view('login');
 	        }
 	        else{
-	            echo 'user type not recognised';
+	            $this->load->view('login');
 	        }
 	    }else{
 	        echo 'not logged in';
@@ -50,63 +56,184 @@ class Admin_controller extends CI_Controller {
 	} 
 	
 	public function logout(){
-	    $this->session->sess_destroy();
-	    redirect('/');
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $this->session->sess_destroy();
+	        redirect('/');
+	    }else{
+	        $this->load->view('login');
+	    }
 	}
 	
 	public function ManageDoctors(){
-	    $this->load->model('Admin_model');
-	
-	    $this->load->view('admin_panel');
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $this->load->model('Admin_model');
 	    
-	    if(!$this->session->has_userdata('refFrom')){
-	        $this->session->set_userdata('refFrom', current_url());
-	    }
-	    
-	    $doctors = $this->Admin_model->GetDoctors();
-	    if($doctors->num_rows() > 0){
-	        foreach ($doctors->result() as $row){
-                $data[] = $row;
-            } 
-            
-            $viewData['docInfo'] = $data;
-            $this->load->view('manage_doctors', $viewData);
+	        $this->load->view('admin_panel');
+	        
+	        /*if(!$this->session->has_userdata('refFrom') && $this->session->refFrom != base_url() . "index.php/Admin_controller/ManageDoctors"){
+	            $this->session->set_userdata('refFrom', current_url());
+	        }*/
+	        
+	        $this->session->set_userdata('refFrom', base_url() . "index.php/Admin_controller/ManageDoctors");
+	        
+	        $doctors = $this->Admin_model->GetDoctors();
+	        if($doctors->num_rows() > 0){
+	            foreach ($doctors->result() as $row){
+                    $data[] = $row;
+                } 
+                
+                $viewData['docInfo'] = $data;
+                $this->load->view('manage_doctors', $viewData);
+	        }else{
+	            $viewData['docInfo'] = "empty";
+	            $this->load->view('manage_doctors', $viewData); 
+	        }
 	    }else{
-	        $viewData['docInfo'] = "empty";
-	        $this->load->view('manage_doctors', $viewData); 
+	        $this->load->view('login');
 	    }
 	}
 	
-	public function DeleteDoc(){
-	    $id = $this->uri->segment(3);
-	    $this->load->model('Admin_model');
-	    $this->Admin_model->DeleteDoctor($id);
-	    redirect('/Admin_controller/ManageDoctors');
+	public function ManagePatients(){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $this->load->model('Admin_model');
+	    
+	        $this->load->view('admin_panel');
+	        
+	        /*if(!$this->session->has_userdata('refFrom') && $this->session->refFrom != base_url() . "index.php/Admin_controller/ManagePatients"){
+	            $this->session->set_userdata('refFrom', base_url() . "index.php/Admin_controller/ManagePatients");
+	        }*/
+	        
+	        $this->session->set_userdata('refFrom', base_url() . "index.php/Admin_controller/ManagePatients");
+	        
+	        $patients = $this->Admin_model->GetPatients();
+	        if($patients->num_rows() > 0){
+	            foreach ($patients->result() as $row){
+                    $data[] = $row;
+                } 
+                
+                $viewData['patInfo'] = $data;
+                $this->load->view('manage_patients', $viewData);
+	        }else{
+	            $viewData['patInfo'] = "empty";
+	            $this->load->view('manage_patients', $viewData); 
+	        }
+	    }else{
+	        $this->load->view('login');
+	    }
 	}
 	
-	public function ShowForm(){
-	    $this->load->view('admin_modal_form');
-	    $this->ManageDoctors();
+	public function Delete(){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $id = $this->uri->segment(4);
+	        $userType = $this->uri->segment(3);
+	        $this->load->model('Admin_model');
+	        $this->Admin_model->Delete($id);
+	        
+	        if($userType == "doctors"){
+	            redirect('/Admin_controller/ManageDoctors');
+	        }else if($userType == "patients"){
+	            redirect('/Admin_controller/ManagePatients');
+	        }else{
+	            redirect('/Admin_controller/ManageDoctors');
+	        }
+	    }else{
+	        $this->load->view('login');
+	    }
+	}
+	
+	public function ShowUpdateForm(){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $userType = $this->uri->segment(3);
+	        $viewData['userType'] = $userType;
+	        $this->load->view('admin_modal_form', $viewData);
+	        if($userType == "doctors"){
+	            $this->ManageDoctors();
+	        }else if($userType == "patients"){
+	            $this->ManagePatients();
+	        }else{
+	            $this->ManageDoctors();
+	        }
+	    }else{
+	        $this->load->view('login');
+	    }
 	}
 	
 	public function UpdateDoctor(){	
-	    $id = $this->uri->segment(3);
-	    $this->load->model('Admin_model');
-	    $this->input->post('email');
-	    
-	    $data = array(
-	        'email' => $this->input->post('email'),
-	        'firstname' => $this->input->post('firstname'),
-	        'lastname' => $this->input->post('lastname')
-	    );
-	    
-	    $this->Admin_model->UpdateDoctor($id, $data);
-	    redirect('/Admin_controller/ManageDoctors');
-	   //$this->Admin_model->UpdateDoctor($id);
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $id = $this->uri->segment(3);
+	        $this->load->model('Admin_model');
+	        $this->input->post('email');
+	        
+	        $data = array(
+	            'email' => $this->input->post('email'),
+	            'firstname' => $this->input->post('firstname'),
+	            'lastname' => $this->input->post('lastname')
+	        );
+	        
+	        $this->Admin_model->UpdateDoctor($id, $data);
+	        redirect('/Admin_controller/ManageDoctors');
+	       //$this->Admin_model->UpdateDoctor($id);
+	    }else{
+	        $this->load->view('login');
+	    }
 	}
 	
-	public function CancelUpdate(){
-	    $refFrom = $this->session->userdata('refFrom');
-	    redirect($refFrom, 'refresh');
+	public function UpdatePatient(){	
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $id = $this->uri->segment(3);
+	        $this->load->model('Admin_model');
+	        $this->input->post('email');
+	        
+	        $data = array(
+	            'email' => $this->input->post('email'),
+	            'firstname' => $this->input->post('firstname'),
+	            'lastname' => $this->input->post('lastname')
+	        );
+	        
+	        $this->Admin_model->UpdatePatient($id, $data);
+	        redirect('/Admin_controller/ManagePatients');
+	       //$this->Admin_model->UpdateDoctor($id);
+	    }else{
+	        $this->load->view('login');
+	    }
+	}
+	
+	public function Cancel(){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $refFrom = $this->session->userdata('refFrom');
+	        redirect($refFrom, 'refresh');
+	    }else{
+	        $this->load->view('login');
+	    }
+	}
+	
+	public function ShowAddForm(){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $this->load->view('admin_modal_form_add');
+	        $this->ManageDoctors();
+	    }else{
+	        $this->load->view('login');
+	    }
+	}
+	
+	public function AddDoctor(){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $this->load->model('Admin_model');
+	        $passHash = password_hash('password', PASSWORD_BCRYPT);
+	        
+	        $data = array(
+	            'email' => $this->input->post('email'),
+	            'firstname' => $this->input->post('firstname'),
+	            'lastname' => $this->input->post('lastname'),
+	            'password' => $passHash,
+	            'utype' => 'doctor'
+	        );
+	        
+	        $this->Admin_model->AddDoctor($data);
+	        redirect('/Admin_controller/ManageDoctors');
+	       //$this->Admin_model->UpdateDoctor($id);
+	    }else{
+	        $this->load->view('login');
+	    }
 	}
 }

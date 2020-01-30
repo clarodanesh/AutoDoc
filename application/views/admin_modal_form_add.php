@@ -16,9 +16,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 
 <div class="modal-form-container">
-    <?php if($userType == 'doctors'){echo form_open('Admin_controller/UpdateDoctor/' . $this->uri->segment(4));}else{echo form_open('Admin_controller/UpdatePatient/' . $this->uri->segment(4));}?>
+    <?php echo form_open('Admin_controller/AddDoctor');?>
         <div class="admin-modal-form">
-            <div class="admin-modal-form-title">Edit Doctor</div>
+            <div class="admin-modal-form-title">Add Doctor</div>
         
             <div class="admin-modal-form-section">
                 <input class="admin-modal-form-input" type="text" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email" placeholder="Email" required>
@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             
             <div class="modal-form-btn-container">
                 <a href="<?php echo base_url() . "index.php/Admin_controller/Cancel"  ?>" class="admin-form-secondary-btn">Cancel</a>
-                <input class="admin-form-primary-btn" id="login-btn" type="submit" value="Edit">
+                <input class="admin-form-primary-btn" id="login-btn" type="submit" value="Add">
             </div>
         </div>
     <?php echo form_close();?>

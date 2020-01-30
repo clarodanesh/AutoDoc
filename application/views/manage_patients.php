@@ -16,21 +16,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 
 <div id='main-content'>
-    <div id='main-header'>Manage Doctors</div>
+    <div id='main-header'>Manage Patients</div>
     <div id='admin-action-container'>
-        <a href="<?php echo base_url() . "index.php/Admin_controller/ShowAddForm" ?>" class='admin-action-btn' id='add-btn'>Add</a>
         <input class='admin-action-search' type="text" placeholder="Search">
     </div>
     <div id='admin-frame'>
-        <?php if($docInfo=="empty"){return null;}foreach($docInfo as $doctor):?>
+        <?php if($patInfo=="empty"){return null;}foreach($patInfo as $patient):?>
             <div class="frame-cards">
                 <div class="frame-card-info-container">
-                    <div class="frame-card-cont-text">Dr. <?php echo $doctor->firstname;?> <?php echo $doctor->lastname;?></div>
-                    <div class="frame-card-cont-text"><?php echo $doctor->email;?></div>
+                    <div class="frame-card-cont-text"><?php echo $patient->firstname;?> <?php echo $patient->lastname;?></div>
+                    <div class="frame-card-cont-text"><?php echo $patient->email;?></div>
                 </div>
                 <div class="frame-card-buttons-container">
-                    <a href="<?php echo base_url() . "index.php/Admin_controller/ShowUpdateForm/doctors/" . $doctor->id; ?>" class="frame-card-button">&#9998</a>
-                    <a href="<?php echo base_url() . "index.php/Admin_controller/Delete/doctors/" . $doctor->id; ?>" class="frame-card-button">&#10799</a>
+                    <a href="<?php echo base_url() . "index.php/Admin_controller/ShowUpdateForm/patients/" . $patient->id; ?>" class="frame-card-button">&#9998</a>
+                    <a href="<?php echo base_url() . "index.php/Admin_controller/Delete/patients/" . $patient->id; ?>" class="frame-card-button">&#10799</a>
                 </div>
             </div>
         <?php endforeach;?>
