@@ -78,6 +78,10 @@ body{
     margin-top: 10px;
 }
 
+.full-width-board{
+    width: 100% !important;
+}
+
 .admin-board{
     height: 350px;
     width: 50%;

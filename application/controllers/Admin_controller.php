@@ -122,6 +122,35 @@ class Admin_controller extends CI_Controller {
 	    }
 	}
 	
+	public function ManageAdmins(){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $this->load->model('Admin_model');
+	    
+	        $this->load->view('admin_panel');
+	        
+	        /*if(!$this->session->has_userdata('refFrom') && $this->session->refFrom != base_url() . "index.php/Admin_controller/ManageDoctors"){
+	            $this->session->set_userdata('refFrom', current_url());
+	        }*/
+	        
+	        $this->session->set_userdata('refFrom', base_url() . "index.php/Admin_controller/ManageAdmins");
+	        
+	        $admins = $this->Admin_model->GetAdmins();
+	        if($admins->num_rows() > 0){
+	            foreach ($admins->result() as $row){
+                    $data[] = $row;
+                } 
+                
+                $viewData['admInfo'] = $data;
+                $this->load->view('manage_admins', $viewData);
+	        }else{
+	            $viewData['admInfo'] = "empty";
+	            $this->load->view('manage_admins', $viewData); 
+	        }
+	    }else{
+	        $this->load->view('login');
+	    }
+	}
+	
 	public function Delete(){
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
 	        $id = $this->uri->segment(4);
@@ -133,6 +162,8 @@ class Admin_controller extends CI_Controller {
 	            redirect('/Admin_controller/ManageDoctors');
 	        }else if($userType == "patients"){
 	            redirect('/Admin_controller/ManagePatients');
+	        }else if($userType == "admin"){
+	            redirect('/Admin_controller/ManageAdmins');
 	        }else{
 	            redirect('/Admin_controller/ManageDoctors');
 	        }
@@ -150,6 +181,8 @@ class Admin_controller extends CI_Controller {
 	            $this->ManageDoctors();
 	        }else if($userType == "patients"){
 	            $this->ManagePatients();
+	        }else if($userType == "admin"){
+	            $this->ManageAdmins();
 	        }else{
 	            $this->ManageDoctors();
 	        }
@@ -209,8 +242,18 @@ class Admin_controller extends CI_Controller {
 	
 	public function ShowAddForm(){
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
-	        $this->load->view('admin_modal_form_add');
-	        $this->ManageDoctors();
+	        $userType = $this->uri->segment(3);
+	        $viewData['userType'] = $userType;
+	        $this->load->view('admin_modal_form_add', $viewData);
+	        if($userType == "doctors"){
+	            $this->ManageDoctors();
+	        }else if($userType == "patients"){
+	            $this->ManagePatients();
+	        }else if($userType == "admin"){
+	            $this->ManageAdmins();
+	        }else{
+	            $this->ManageDoctors();
+	        }
 	    }else{
 	        $this->load->view('login');
 	    }
@@ -231,7 +274,26 @@ class Admin_controller extends CI_Controller {
 	        
 	        $this->Admin_model->AddDoctor($data);
 	        redirect('/Admin_controller/ManageDoctors');
-	       //$this->Admin_model->UpdateDoctor($id);
+	    }else{
+	        $this->load->view('login');
+	    }
+	}
+	
+	public function AddAdmin(){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	        $this->load->model('Admin_model');
+	        $passHash = password_hash('password', PASSWORD_BCRYPT);
+	        
+	        $data = array(
+	            'email' => $this->input->post('email'),
+	            'firstname' => $this->input->post('firstname'),
+	            'lastname' => $this->input->post('lastname'),
+	            'password' => $passHash,
+	            'utype' => 'admin'
+	        );
+	        
+	        $this->Admin_model->AddAdmin($data);
+	        redirect('/Admin_controller/ManageAdmins');
 	    }else{
 	        $this->load->view('login');
 	    }

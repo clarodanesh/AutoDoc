@@ -16,21 +16,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 
 <div id='main-content'>
-    <div id='main-header'>Manage Doctors</div>
+    <div id='main-header'>Manage Admins</div>
     <div id='admin-action-container'>
-        <a href="<?php echo base_url() . "index.php/Admin_controller/ShowAddForm/doctors" ?>" class='admin-action-btn' id='add-btn'>Add</a>
-        <input class='admin-action-search' type="text" placeholder="Search">
+        <a href="<?php echo base_url() . "index.php/Admin_controller/ShowAddForm/admin" ?>" class='admin-action-btn' id='add-btn'>Add</a>
     </div>
     <div id='admin-frame'>
-        <?php if($docInfo=="empty"){return null;}foreach($docInfo as $doctor):?>
+        <?php if($admInfo=="empty"){return null;}foreach($admInfo as $admin):?>
             <div class="frame-cards">
                 <div class="frame-card-info-container">
-                    <div class="frame-card-cont-text">Dr. <?php echo $doctor->firstname;?> <?php echo $doctor->lastname;?></div>
-                    <div class="frame-card-cont-text"><?php echo $doctor->email;?></div>
+                    <div class="frame-card-cont-text"><?php echo $admin->firstname;?><?php echo " " . $admin->lastname?></div>
+                    <div class="frame-card-cont-text"><?php echo $admin->email;?></div>
                 </div>
                 <div class="frame-card-buttons-container">
-                    <a href="<?php echo base_url() . "index.php/Admin_controller/ShowUpdateForm/doctors/" . $doctor->id; ?>" class="frame-card-button">&#9998</a>
-                    <a href="<?php echo base_url() . "index.php/Admin_controller/Delete/doctors/" . $doctor->id; ?>" class="frame-card-button">&#10799</a>
+                    <a href="<?php echo base_url() . "index.php/Admin_controller/ShowUpdateForm/admin/" . $admin->id; ?>" class="frame-card-button">&#9998</a>
+                    <a href="<?php echo base_url() . "index.php/Admin_controller/Delete/admin/" . $admin->id; ?>" class="frame-card-button">&#10799</a>
                 </div>
             </div>
         <?php endforeach;?>

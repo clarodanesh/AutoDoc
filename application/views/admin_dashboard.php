@@ -26,11 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <div class='admin-board-container' id='bottom-admin-board-container'>
-        <div class='admin-board'>
-            <div class='admin-board-header'>Requests</div>
-            <div class='admin-board-content'></div>
-        </div>
-        <div class='admin-board right-admin-board'>
+        <div class='admin-board full-width-board'>
             <div class='admin-board-header'>Appointments</div>
             <div class='admin-board-content'></div>
         </div>

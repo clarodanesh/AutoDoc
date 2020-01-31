@@ -26,7 +26,8 @@ class Login_controller extends CI_Controller {
 
 	public function index(){
 	    //echo $this->session->logged;
-	    
+	    /*$this->session->set_userdata('email', 'superuser@autodoc.com'); 
+                $this->session->set_userdata('uType', 'admin');*/
 	    //if the session with email and userType are set then open that user session type page
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
 	        //echo 'email and utype are set';
