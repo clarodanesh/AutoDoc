@@ -51,21 +51,21 @@ class Admin_controller extends CI_Controller {
 	        }
 	    }else{
 	        echo 'not logged in';
-		    $this->load->view('login');
+		    redirect('/Login_controller');
 	    }
 	} 
 	
 	public function logout(){
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $this->session->sess_destroy();
 	        redirect('/');
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 	
 	public function ManageDoctors(){
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $this->load->model('Admin_model');
 	    
 	        $this->load->view('admin_panel');
@@ -89,12 +89,12 @@ class Admin_controller extends CI_Controller {
 	            $this->load->view('manage_doctors', $viewData); 
 	        }
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 	
 	public function ManagePatients(){
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $this->load->model('Admin_model');
 	    
 	        $this->load->view('admin_panel');
@@ -118,12 +118,12 @@ class Admin_controller extends CI_Controller {
 	            $this->load->view('manage_patients', $viewData); 
 	        }
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 	
 	public function ManageAdmins(){
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $this->load->model('Admin_model');
 	    
 	        $this->load->view('admin_panel');
@@ -147,12 +147,12 @@ class Admin_controller extends CI_Controller {
 	            $this->load->view('manage_admins', $viewData); 
 	        }
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 	
 	public function Delete(){
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $id = $this->uri->segment(4);
 	        $userType = $this->uri->segment(3);
 	        $this->load->model('Admin_model');
@@ -168,12 +168,12 @@ class Admin_controller extends CI_Controller {
 	            redirect('/Admin_controller/ManageDoctors');
 	        }
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 	
 	public function ShowUpdateForm(){
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $userType = $this->uri->segment(3);
 	        $viewData['userType'] = $userType;
 	        $this->load->view('admin_modal_form', $viewData);
@@ -192,7 +192,7 @@ class Admin_controller extends CI_Controller {
 	}
 	
 	public function UpdateDoctor(){	
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $id = $this->uri->segment(3);
 	        $this->load->model('Admin_model');
 	        $this->input->post('email');
@@ -207,12 +207,12 @@ class Admin_controller extends CI_Controller {
 	        redirect('/Admin_controller/ManageDoctors');
 	       //$this->Admin_model->UpdateDoctor($id);
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 	
 	public function UpdatePatient(){	
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $id = $this->uri->segment(3);
 	        $this->load->model('Admin_model');
 	        $this->input->post('email');
@@ -227,21 +227,21 @@ class Admin_controller extends CI_Controller {
 	        redirect('/Admin_controller/ManagePatients');
 	       //$this->Admin_model->UpdateDoctor($id);
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 	
 	public function Cancel(){
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $refFrom = $this->session->userdata('refFrom');
 	        redirect($refFrom, 'refresh');
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 	
 	public function ShowAddForm(){
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $userType = $this->uri->segment(3);
 	        $viewData['userType'] = $userType;
 	        $this->load->view('admin_modal_form_add', $viewData);
@@ -255,12 +255,12 @@ class Admin_controller extends CI_Controller {
 	            $this->ManageDoctors();
 	        }
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 	
 	public function AddDoctor(){
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $this->load->model('Admin_model');
 	        $passHash = password_hash('password', PASSWORD_BCRYPT);
 	        
@@ -275,12 +275,12 @@ class Admin_controller extends CI_Controller {
 	        $this->Admin_model->AddDoctor($data);
 	        redirect('/Admin_controller/ManageDoctors');
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 	
 	public function AddAdmin(){
-	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType')){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $this->load->model('Admin_model');
 	        $passHash = password_hash('password', PASSWORD_BCRYPT);
 	        
@@ -295,7 +295,7 @@ class Admin_controller extends CI_Controller {
 	        $this->Admin_model->AddAdmin($data);
 	        redirect('/Admin_controller/ManageAdmins');
 	    }else{
-	        $this->load->view('login');
+	        redirect('/Login_controller');
 	    }
 	}
 }
