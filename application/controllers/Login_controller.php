@@ -40,7 +40,7 @@ class Login_controller extends CI_Controller {
 	            echo 'you are a doctor';
 	        }
 	        else if($this->session->uType == 'user'){
-	            echo 'you are a user';
+	            redirect('/User_controller');
 	        }
 	        else{
 	            echo 'user type not recognised';

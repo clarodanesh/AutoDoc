@@ -195,12 +195,15 @@ class Admin_controller extends CI_Controller {
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $id = $this->uri->segment(3);
 	        $this->load->model('Admin_model');
-	        $this->input->post('email');
 	        
+	        $email = filter_var($this->input->post('email'), FILTER_SANITIZE_EMAIL);
+	        $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
+	        $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
+	            
 	        $data = array(
-	            'email' => $this->input->post('email'),
-	            'firstname' => $this->input->post('firstname'),
-	            'lastname' => $this->input->post('lastname')
+	            'email' => $email,
+	            'firstname' => $firstname,
+	            'lastname' => $lastname
 	        );
 	        
 	        $this->Admin_model->UpdateDoctor($id, $data);
@@ -215,12 +218,15 @@ class Admin_controller extends CI_Controller {
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
 	        $id = $this->uri->segment(3);
 	        $this->load->model('Admin_model');
-	        $this->input->post('email');
+	        
+	        $email = filter_var($this->input->post('email'), FILTER_SANITIZE_EMAIL);
+	        $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
+	        $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
 	        
 	        $data = array(
-	            'email' => $this->input->post('email'),
-	            'firstname' => $this->input->post('firstname'),
-	            'lastname' => $this->input->post('lastname')
+	            'email' => $email,
+	            'firstname' => $firstname,
+	            'lastname' => $lastname
 	        );
 	        
 	        $this->Admin_model->UpdatePatient($id, $data);
@@ -264,10 +270,14 @@ class Admin_controller extends CI_Controller {
 	        $this->load->model('Admin_model');
 	        $passHash = password_hash('password', PASSWORD_BCRYPT);
 	        
+	        $email = filter_var($this->input->post('email'), FILTER_SANITIZE_EMAIL);
+	        $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
+	        $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
+	        
 	        $data = array(
-	            'email' => $this->input->post('email'),
-	            'firstname' => $this->input->post('firstname'),
-	            'lastname' => $this->input->post('lastname'),
+	            'email' => $email,
+	            'firstname' => $firstname,
+	            'lastname' => $lastname,
 	            'password' => $passHash,
 	            'utype' => 'doctor'
 	        );
@@ -284,12 +294,16 @@ class Admin_controller extends CI_Controller {
 	        $this->load->model('Admin_model');
 	        $passHash = password_hash('password', PASSWORD_BCRYPT);
 	        
+	        $email = filter_var($this->input->post('email'), FILTER_SANITIZE_EMAIL);
+	        $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
+	        $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
+	        
 	        $data = array(
-	            'email' => $this->input->post('email'),
-	            'firstname' => $this->input->post('firstname'),
-	            'lastname' => $this->input->post('lastname'),
+	            'email' => $email,
+	            'firstname' => $firstname,
+	            'lastname' => $lastname,
 	            'password' => $passHash,
-	            'utype' => 'admin'
+	            'utype' => 'doctor'
 	        );
 	        
 	        $this->Admin_model->AddAdmin($data);
