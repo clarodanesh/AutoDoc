@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <select name="doc-slct" id="doctor-slct" form="book-form">
             <?php if($doctors=="empty"){return null;}foreach($doctors as $doc):?>
             
-                <option value="<?php echo $doc->firstname;?> <?php echo $doc->lastname;?>">Dr. <?php echo $doc->firstname;?> <?php echo $doc->lastname;?></option>
+                <option value="<?php echo $doc->email;?>">Dr. <?php echo $doc->firstname;?> <?php echo $doc->lastname;?></option>
                         
             <?php endforeach;?>
             </select>

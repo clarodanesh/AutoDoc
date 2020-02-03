@@ -57,7 +57,7 @@ class User_controller extends CI_Controller {
 	            }else{
 	                $viewData['doctors'] = "empty";
 	                $this->load->view('user_nav');
-	            $this->load->view('user_landing', $viewData); 
+	                $this->load->view('user_landing', $viewData); 
 	            }
 	            
 	            //$this->load->view('user_nav');
@@ -78,6 +78,52 @@ class User_controller extends CI_Controller {
 	        redirect('/');
 	    }else{
 	        redirect('/Login_controller');
+	    }
+	}
+	
+	private function _CheckDate($date){
+	    
+	    echo '<br>';
+	    echo $date[0];
+	    echo '-';
+	    echo $date[1];
+	    echo '-';
+	    echo $date[2];
+	    echo '<br>';
+	    $currDate = date('Y-m-d');
+	    $currDateArr = explode("-", $currDate);
+	    $currDateints = array_map(
+            function($value) { return (int)$value; },
+            $currDateArr
+        );
+        
+        if($date[0] >= $currDateints[0]){
+        echo '<br>first<br>';
+        echo $currDateints[0];
+            if($date[1] >= $currDateints[1]){
+            echo '<br>second<br>';
+            echo $currDateints[1];
+                if($date[2] >= $currDateints[2]){
+                echo '<br>third<br>';
+                echo $currDateints[2];
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+	}
+	
+	private function _CheckTime($time){
+	    if($time[0] <= 17 && $time[0] >= 9){
+	        return true;
+	    }
+	    else{
+	        return false;
 	    }
 	}
 	
@@ -102,13 +148,45 @@ class User_controller extends CI_Controller {
 	        echo " ";
 	        echo $this->input->post('time');
 	        $exp = explode(":", $this->input->post('time'));
-	        echo " "; 
+	        $expDate = explode("-", $this->input->post('date'));
+	        echo " ";
 	        echo $exp[0];
 	        echo $exp[1];
+	        echo $expDate[0];
+	        echo $expDate[1];
+	        echo $expDate[2];
 	        echo " ";
 	        echo $this->input->post('doc-slct');
 	        echo " ";
-	        echo 'booked appt';
+	        echo 'booked appt ';
+	        
+	        $time = array_map(
+                function($value) { return (int)$value; },
+                $exp
+            );
+            
+            $date = array_map(
+                function($value) { return (int)$value; },
+                $expDate
+            );
+	        
+	        if($this->_CheckTime($time) && $this->_CheckDate($date)){
+	            echo 'working out';
+	        }else{
+	            echo 'not working out';
+	        }
+	        
+	        
+	        /*UNCOMMENT ONCE FINISHED VALIDATION OF INPUT*/
+	        /*$data = array(
+	            'date' => $this->input->post('date'),
+	            'time' => $this->input->post('time'),
+	            'doctor' => $this->input->post('doc-slct'),
+	            'user' => $this->session->email,
+	            'astate' => 'booked'
+	        );
+	        
+	        $this->User_model->set_appt($data);*/
 	    }else{
 	        redirect('/Login_controller');
 	    }

@@ -11,6 +11,12 @@ class User_model extends CI_Model{
         return $query;
     }
     
+    function set_appt($data){
+        //$query = $this->db->get_where('users', array('email'=> $data['email'], 'password'=> $data['password']),1,0);
+        $this->db->insert('appt', $data);
+        return $this->db->affected_rows();
+    }
+    
     function GetPatients(){
     //, 'password'=> $data['password']
         $query = $this->db->get_where('users', array('utype'=> 'user'));
