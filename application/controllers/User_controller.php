@@ -249,6 +249,11 @@ class User_controller extends CI_Controller {
 	}
 	
 	public function ViewAppt(){
-	    $this->load->view('user_view_appt');
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'user'){
+	        $this->load->view('user_nav');
+	        $this->load->view('user_view_appt');
+	    }else{
+	        redirect('/Login_controller');
+	    }
 	}
 }

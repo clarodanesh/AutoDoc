@@ -17,7 +17,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 
-<?php echo 'user_view_appt'; ?>
+<div id="view-appt-main">
+    <div id="view-appt-view">
+        <div id="auth-form-title">Your Booking</div>
+            <!--<option value="<?php echo $doc->email;?>">Dr. <?php echo $doc->firstname;?> <?php echo $doc->lastname;?></option>-->
+        <div class="user-detail">Doc Name</div>
+        <div class="user-detail">Date</div>
+        <div class="user-detail">Time</div>
+        <a href="" class="auth-form-primary-btn" id="cancel">Cancel</a>
+    </div>
+</div>
  
 <script src="<?php echo base_url(); ?>js/validation.js"></script>
 <script src="<?php echo base_url(); ?>js/user.js"></script>
