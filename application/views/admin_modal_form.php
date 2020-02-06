@@ -18,10 +18,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="modal-form-container">
     <?php if($userType == 'doctors'){echo form_open('Admin_controller/UpdateDoctor/' . $this->uri->segment(4));}else{echo form_open('Admin_controller/UpdatePatient/' . $this->uri->segment(4));}?>
         <div class="admin-modal-form">
-            <div class="admin-modal-form-title">Edit Doctor</div>
+            <div class="admin-modal-form-title">Edit</div>
         
             <div class="admin-modal-form-section">
-                <input class="admin-modal-form-input" type="text" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email" placeholder="Email" required>
+                <input class="admin-modal-form-input" type="date" name="dob" id="dob" required>
             </div>
             
             <div class="admin-modal-form-section">

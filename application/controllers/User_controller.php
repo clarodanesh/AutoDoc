@@ -327,12 +327,6 @@ class User_controller extends CI_Controller {
 	        $dob = filter_var($this->input->post('dob'), FILTER_SANITIZE_STRING);
 	        $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
 	        $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
-	           echo 'check';
-	        echo $this->input->post('dob'); 
-	        echo " ";
-	        echo $this->input->post('firstname');
-	        echo " ";
-	        echo $this->input->post('lastname');
 	                           
 	        $data = array(
 	            'firstname' => $firstname,

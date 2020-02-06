@@ -72,6 +72,7 @@ body{
 .admin-board-container{
     display: flex;
     flex-direction: row;
+    text-decoration: none;
 }
 
 #bottom-admin-board-container{
@@ -301,4 +302,8 @@ body{
     flex-direction: row;
     justify-content: space-evenly;
     width: 200px;
+}
+
+#dob{
+    width: 230px;
 }

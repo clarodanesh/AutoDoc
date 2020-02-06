@@ -20,17 +20,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class='admin-board-container'>
         <?php echo anchor('Admin_controller/ManageDoctors', "<div class='admin-board-header'>Doctors</div><div class='admin-board-content'></div>", 'class="admin-board"');?>
         
-        <div class='admin-board right-admin-board'>
+        <a href="<?php echo base_url() . "index.php/Admin_controller/ManagePatients"  ?>" class='admin-board right-admin-board'>
             <div class='admin-board-header'>Patients</div>
             <div class='admin-board-content'></div>
-        </div>
+        </a>
     </div>
-    <div class='admin-board-container' id='bottom-admin-board-container'>
+    <a href="<?php echo base_url() . "index.php/Admin_controller/ManageAdmins"  ?>" class='admin-board-container' id='bottom-admin-board-container'>
         <div class='admin-board full-width-board'>
             <div class='admin-board-header'>Appointments</div>
             <div class='admin-board-content'></div>
         </div>
-    </div>
+    </a>
 </div>
 
 </body>

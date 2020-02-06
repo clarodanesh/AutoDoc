@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div id='admin-side-panel'>
     <div id='admin-panel-header'>Admin Panel</div>
+    <a href="<?php echo base_url() . "index.php/Admin_controller/"  ?>" class='side-panel-link'>Dashboard</a>
     <a href="<?php echo base_url() . "index.php/Admin_controller/ManageDoctors"  ?>" class='side-panel-link'>Manage doctors</a>
     <a href="<?php echo base_url() . "index.php/Admin_controller/ManagePatients"  ?>" class='side-panel-link'>Manage patients</a>
     <a href="<?php echo base_url() . "index.php/Admin_controller/ManageAdmins"  ?>" class='side-panel-link'>Manage Admins</a>

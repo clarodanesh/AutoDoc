@@ -25,6 +25,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             
             <div class="admin-modal-form-section">
+                <input class="admin-modal-form-input" type="date" name="dob" id="dob" required>
+            </div>
+            
+            <div class="admin-modal-form-section">
                 <input class="admin-modal-form-input" type="text" name="firstname" id="firstname" placeholder="Firstname" required>
             </div>
             

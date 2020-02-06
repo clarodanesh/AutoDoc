@@ -196,12 +196,12 @@ class Admin_controller extends CI_Controller {
 	        $id = $this->uri->segment(3);
 	        $this->load->model('Admin_model');
 	        
-	        $email = filter_var($this->input->post('email'), FILTER_SANITIZE_EMAIL);
+	        $dob = $this->input->post('dob');
 	        $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
 	        $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
 	            
 	        $data = array(
-	            'email' => $email,
+	            'dob' => $dob,
 	            'firstname' => $firstname,
 	            'lastname' => $lastname
 	        );
@@ -219,12 +219,12 @@ class Admin_controller extends CI_Controller {
 	        $id = $this->uri->segment(3);
 	        $this->load->model('Admin_model');
 	        
-	        $email = filter_var($this->input->post('email'), FILTER_SANITIZE_EMAIL);
+	        $dob = $this->input->post('dob');
 	        $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
 	        $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
 	        
 	        $data = array(
-	            'email' => $email,
+	            'dob' => $dob,
 	            'firstname' => $firstname,
 	            'lastname' => $lastname
 	        );
@@ -273,12 +273,14 @@ class Admin_controller extends CI_Controller {
 	        $email = filter_var($this->input->post('email'), FILTER_SANITIZE_EMAIL);
 	        $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
 	        $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
+	        $dob = $this->input->post('dob');
 	        
 	        $data = array(
 	            'email' => $email,
 	            'firstname' => $firstname,
 	            'lastname' => $lastname,
 	            'password' => $passHash,
+	            'dob' => $dob,
 	            'utype' => 'doctor'
 	        );
 	        
@@ -297,13 +299,15 @@ class Admin_controller extends CI_Controller {
 	        $email = filter_var($this->input->post('email'), FILTER_SANITIZE_EMAIL);
 	        $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
 	        $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
+	        $dob = $this->input->post('dob');
 	        
 	        $data = array(
 	            'email' => $email,
 	            'firstname' => $firstname,
 	            'lastname' => $lastname,
 	            'password' => $passHash,
-	            'utype' => 'doctor'
+	            'dob' => $dob,
+	            'utype' => 'admin'
 	        );
 	        
 	        $this->Admin_model->AddAdmin($data);

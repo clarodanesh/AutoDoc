@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="frame-card-cont-text"><?php echo $admin->email;?></div>
                 </div>
                 <div class="frame-card-buttons-container">
-                    <a href="<?php echo base_url() . "index.php/Admin_controller/ShowUpdateForm/admin/" . $admin->id; ?>" class="frame-card-button">&#9998</a>
+                    <!--<a href="<?php echo base_url() . "index.php/Admin_controller/ShowUpdateForm/admin/" . $admin->id; ?>" class="frame-card-button">&#9998</a>-->
                     <a href="<?php echo base_url() . "index.php/Admin_controller/Delete/admin/" . $admin->id; ?>" class="frame-card-button">&#10799</a>
                 </div>
             </div>

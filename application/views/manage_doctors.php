@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div id='main-header'>Manage Doctors</div>
     <div id='admin-action-container'>
         <a href="<?php echo base_url() . "index.php/Admin_controller/ShowAddForm/doctors" ?>" class='admin-action-btn' id='add-btn'>Add</a>
-        <input class='admin-action-search' type="text" placeholder="Search">
+        <!--<input class='admin-action-search' type="text" placeholder="Search">-->
     </div>
     <div id='admin-frame'>
         <?php if($docInfo=="empty"){return null;}foreach($docInfo as $doctor):?>

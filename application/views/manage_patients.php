@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div id='main-content'>
     <div id='main-header'>Manage Patients</div>
     <div id='admin-action-container'>
-        <input class='admin-action-search' type="text" placeholder="Search">
+        <!--<input class='admin-action-search' type="text" placeholder="Search">-->
     </div>
     <div id='admin-frame'>
         <?php if($patInfo=="empty"){return null;}foreach($patInfo as $patient):?>
