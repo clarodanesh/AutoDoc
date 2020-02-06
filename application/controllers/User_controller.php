@@ -45,11 +45,21 @@ class User_controller extends CI_Controller {
 	        else if($this->session->uType == 'user'){
 	            $this->load->model('User_model');
 	            $docs = $this->User_model->GetDoctors();
+	            $appts = $this->User_model->get_appt_single($this->session->email);
 	            
 	            if($docs->num_rows() > 0){
 	                foreach ($docs->result() as $row){
                         $data[] = $row;
                     } 
+                    
+                    if($appts->num_rows() == 1){
+                        foreach ($appts->result() as $row2){
+                            $data2[] = $row2;
+                        } 
+                        $viewData['appts'] = $data2;
+                    }else{
+                        $viewData['appts'] = "empty";
+                    }
                     
                     $viewData['doctors'] = $data;
                     $this->load->view('user_nav');
@@ -79,6 +89,12 @@ class User_controller extends CI_Controller {
 	    }else{
 	        redirect('/Login_controller');
 	    }
+	}
+	
+	public function cancel(){
+	    $id = $this->uri->segment(3);
+	    $this->load->model('User_model');
+	    $this->User_model->Delete($id);
 	}
 	
 	private function _CheckDate($date){
@@ -147,6 +163,23 @@ class User_controller extends CI_Controller {
 	    }
 	} 
 	
+	private function _IsUserBookingUnique(){
+	    $this->load->model('User_model');
+	
+	    /*$data = array(
+	        'user' => $this->session->email,
+	    );*/
+	
+	    $user = $this->User_model->get_appt_single($this->session->email);
+	    if($user->num_rows() > 0){
+	        //echo 'bookin no unique';
+	        return false;
+	    }else{
+	        //echo 'bookin unique';
+	        return true;
+	    }
+	}
+	
 	public function BookAppt(){
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'user'){
 	        $this->load->model('User_model');
@@ -196,7 +229,7 @@ class User_controller extends CI_Controller {
                 'time' => $this->input->post('time')
             );
 	        
-	        if($this->_CheckTime($time) && $this->_CheckDate($date) && $this->_isBookingUnique($uniqueData)){
+	        if($this->_CheckTime($time) && $this->_CheckDate($date) && $this->_isBookingUnique($uniqueData) && $this->_IsUserBookingUnique()){
 	            //echo 'working out';
 	            $data = array(
 	                'date' => $this->input->post('date'),
@@ -208,23 +241,42 @@ class User_controller extends CI_Controller {
 	            
 	            $affRows = $this->User_model->set_appt($data);
 	            if($affRows > 0){
-	                redirect('/User_controller/ViewAppt');
+	                redirect('/User_controller/');
 	            }
 	        }else{
 	            //echo 'not working out';
 	            $this->load->model('User_model');
 	            $docs = $this->User_model->GetDoctors();
+	            $appts = $this->User_model->get_appt_single($this->session->email);
 	            
 	            if($docs->num_rows() > 0){
 	                foreach ($docs->result() as $row){
                         $data[] = $row;
                     } 
                     
+                    if($appts->num_rows() == 1){
+                        foreach ($appts->result() as $row2){
+                            $data2[] = $row2;
+                        } 
+                        $viewData['appts'] = $data2;
+                    }else{
+                        $viewData['appts'] = "empty";
+                    }
+                    
                     $viewData['doctors'] = $data;
                     $this->load->view('user_nav');
 	                $viewData['error'] = 'Fill the booking in correctly';
 	                $this->load->view("user_landing", $viewData);
 	            }else{
+	                if($appts->num_rows() == 1){
+                        foreach ($appts->result() as $row2){
+                            $data2[] = $row2;
+                        } 
+                        $viewData['appts'] = $data2;
+                    }else{
+                        $viewData['appts'] = "empty";
+                    }
+	            
 	                $viewData['doctors'] = "empty";
 	                $this->load->view('user_nav');
 	                $viewData['error'] = 'Fill the booking in correctly';
@@ -248,10 +300,48 @@ class User_controller extends CI_Controller {
 	    }
 	}
 	
-	public function ViewAppt(){
+	public function ViewDetails(){
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'user'){
+	        $this->load->model('User_model');
+	        $user = $this->User_model->GetUser($this->session->email);
+	        
+	        foreach ($user->result() as $row){
+                $data[] = $row;
+            } 
+            
+            $viewData['dob'] = $data[0]->dob;
+            $viewData['firstname'] = $data[0]->firstname;
+            $viewData['lastname'] = $data[0]->lastname;
+	        
 	        $this->load->view('user_nav');
-	        $this->load->view('user_view_appt');
+	        $this->load->view('user_view_details', $viewData);
+	    }else{
+	        redirect('/Login_controller');
+	    }
+	}
+	
+	public function EditDetails(){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'user'){
+	        $this->load->model('User_model');
+	        
+	        $dob = filter_var($this->input->post('dob'), FILTER_SANITIZE_STRING);
+	        $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
+	        $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
+	           echo 'check';
+	        echo $this->input->post('dob'); 
+	        echo " ";
+	        echo $this->input->post('firstname');
+	        echo " ";
+	        echo $this->input->post('lastname');
+	                           
+	        $data = array(
+	            'firstname' => $firstname,
+	            'lastname' => $lastname,
+	            'dob' => $dob
+	        );
+	        
+	        $this->User_model->EditUser($this->session->email, $data);
+	        redirect('User_controller/ViewDetails');
 	    }else{
 	        redirect('/Login_controller');
 	    }

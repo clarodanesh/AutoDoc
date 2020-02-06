@@ -12,7 +12,6 @@ body{
     justify-content: space-between;
     border-bottom: 3px solid #3394FF;
     font-family: 'Ubuntu', sans-serif;
-    position: fixed;
     top: 0;
     box-shadow: 0px -3px 20px #888;
 }
@@ -62,9 +61,9 @@ body{
 
 #form-container{
     display: grid;
-    height: 100vh;
+    height: 88vh;
     place-items: center;
-    width: 100%;
+    width: 50%;
 }
 
 #doctor-slct{
@@ -83,7 +82,7 @@ body{
 
 #view-appt-main{
     display: grid;
-    height: 100vh;
+    height: 88vh;
     place-items: center;
     width: 100%;
 }
@@ -91,7 +90,7 @@ body{
 #view-appt-view{
     display: flex;
     flex-direction: column;
-    background-color: green;
+    height: 401px;
 }
 
 #cancel{
@@ -102,9 +101,41 @@ body{
     text-decoration: none;
 }
 
+#edit{
+    display: flex;
+    line-height: 40px;
+    justify-content: center;
+    align-self: center;
+    text-decoration: none;
+}
+
+#dob{
+    width: 230px;
+}
+
 .user-detail{
     font-family: 'Ubuntu', sans-serif;
     color: #3394FF;
     font-size: 1.5rem;
     margin-bottom: 20px;
+}
+
+#view-holder{
+    display: flex;
+    flex-direction: row;
+}
+
+.user-form{
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    align-items: center;
+}
+
+#save-btn{
+    
+}
+
+#dob{
+    
 }

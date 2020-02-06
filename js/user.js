@@ -12,4 +12,6 @@ $( document ).ready(function() {
             $('#auth-form-error').html('Email or Password is incorrect');
         }
     });
+    
+    
 });

@@ -21,7 +21,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     <div id="link-container">
         <a href="<?php echo base_url() . "index.php/User_controller/"  ?>" class="link">Book</a>
-        <a href="<?php echo base_url() . "index.php/User_controller/ViewAppt"  ?>" class="link">View</a>
         <a href="<?php echo base_url() . "index.php/User_controller/ViewDetails"  ?>" class="link">Details</a>
         <div id="link-seperator">|</div>
         <a href="<?php echo base_url() . "index.php/User_controller/logout"  ?>" class="link">&#x23FB;</a>
