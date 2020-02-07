@@ -46,7 +46,6 @@ class Login_controller extends CI_Controller {
 	            echo 'user type not recognised';
 	        }
 	    }else{
-	        echo 'not logged in';
 		    $this->load->view('login');
 	    }
 	}

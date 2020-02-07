@@ -58,5 +58,10 @@ class Admin_model extends CI_Model{
         $this->db->where('email', $e);
         $this->db->update('users', array('password'=> $p));
     }
+    
+    function GetUsers($e){
+        $query = $this->db->get_where('users', array('email'=> $e),1,0);
+        return $query;
+    }
 }
 ?>    

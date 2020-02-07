@@ -310,8 +310,17 @@ class Admin_controller extends CI_Controller {
 	            'utype' => 'doctor'
 	        );
 	        
-	        $this->Admin_model->AddDoctor($data);
+	        if($this->IsUserUnique($email)){
+	            $this->Admin_model->AddDoctor($data);
 	        redirect('/Admin_controller/ManageDoctors');
+	        }else{
+	            $userType = $this->uri->segment(3);
+	            $viewData['userType'] = 'doctors';
+	            $this->load->view('admin_modal_form_add', $viewData);
+	            $this->ManageDoctors();
+	        }
+	        
+	        
 	    }else{
 	        redirect('/Login_controller');
 	    }
@@ -336,10 +345,32 @@ class Admin_controller extends CI_Controller {
 	            'utype' => 'admin'
 	        );
 	        
-	        $this->Admin_model->AddAdmin($data);
-	        redirect('/Admin_controller/ManageAdmins');
+	        if($this->IsUserUnique($email)){
+	            $this->Admin_model->AddAdmin($data);
+	            redirect('/Admin_controller/ManageAdmins');
+	        }else{
+	            $userType = $this->uri->segment(3);
+	            $viewData['userType'] = 'admin';
+	            $this->load->view('admin_modal_form_add', $viewData);
+	            $this->ManageAdmins();
+	        }
 	    }else{
 	        redirect('/Login_controller');
 	    }
 	}
+	
+	public function IsUserUnique($e){
+	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
+	        $this->load->model('Admin_model');
+	    
+	        $user = $this->Admin_model->GetUsers($e);
+	        if($user->num_rows() > 0){
+	            return false;
+	        }else{
+	            return true;
+	        }
+	     }else{
+	            redirect('/Login_controller');
+	     }   
+	} 
 }
