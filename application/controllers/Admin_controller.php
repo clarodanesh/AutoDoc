@@ -47,8 +47,16 @@ class Admin_controller extends CI_Controller {
 	            if(password_verify('password', $data['0']->password)){
 	                $this->load->view('admin_password_change');
 	            }else{
+	                $adm = $this->Admin_model->GetAdmins();
+	                $pt = $this->Admin_model->GetPatients();
+	                $doc = $this->Admin_model->GetDoctors();
+	            
+	                $viewData['admSize'] = count($adm->result());
+	                $viewData['ptSize'] = count($pt->result());
+	                $viewData['docSize'] = count($doc->result());
+	                
 	                $this->load->view('admin_panel');
-	                $this->load->view('admin_dashboard');
+	                $this->load->view('admin_dashboard', $viewData);
 	            }
 	        }
 	        else if($this->session->uType == 'doctor'){

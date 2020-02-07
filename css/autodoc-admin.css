@@ -121,6 +121,8 @@ body{
 
 .admin-board-content{
     height: 250px;
+    display: block;
+    text-align: center;
 }
 
 #admin-action-container{
@@ -309,6 +311,15 @@ body{
 }
 
 #admin-form-error{
-font-family: 'Ubuntu', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     color: red;
+}
+
+.number{
+    font-size: 11rem;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.caption{
+    font-family: 'Ubuntu', sans-serif;
 }

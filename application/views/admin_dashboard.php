@@ -18,17 +18,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div id='main-content'>
     <div id='main-header'>Dashboard</div>
     <div class='admin-board-container'>
-        <?php echo anchor('Admin_controller/ManageDoctors', "<div class='admin-board-header'>Doctors</div><div class='admin-board-content'></div>", 'class="admin-board"');?>
+        <!--<?php echo anchor('Admin_controller/ManageDoctors', "<div class='admin-board-header'>Doctors</div><div class='admin-board-content'></div>", 'class="admin-board"');?>-->
+        
+        <a href="<?php echo base_url() . "index.php/Admin_controller/ManageDoctors"  ?>" class='admin-board'>
+            <div class='admin-board-header'>Doctors</div>
+            <div class='admin-board-content'>
+                <div class="number"><?php echo $docSize; ?></div>
+                <div class="caption">Active Doctors</div>
+            </div>
+        </a>
         
         <a href="<?php echo base_url() . "index.php/Admin_controller/ManagePatients"  ?>" class='admin-board right-admin-board'>
             <div class='admin-board-header'>Patients</div>
-            <div class='admin-board-content'></div>
+            <div class='admin-board-content'>
+                <div class="number"><?php echo $ptSize; ?></div>
+                <div class="caption">Active Patients</div>
+            </div>
         </a>
     </div>
     <a href="<?php echo base_url() . "index.php/Admin_controller/ManageAdmins"  ?>" class='admin-board-container' id='bottom-admin-board-container'>
         <div class='admin-board full-width-board'>
-            <div class='admin-board-header'>Appointments</div>
-            <div class='admin-board-content'></div>
+            <div class='admin-board-header'>Admins</div>
+            <div class='admin-board-content'>
+                <div class="number"><?php echo $admSize; ?></div>
+                <div class="caption">Active Admins</div>
+            </div>
         </div>
     </a>
 </div>
