@@ -10,12 +10,6 @@ class Doctor_model extends CI_Model{
         return $query;
     }
     
-    function GetDoctors(){
-    //, 'password'=> $data['password']
-        $query = $this->db->get_where('users', array('utype'=> 'doctor'));
-        return $query;
-    }
-    
     function GetDoctorName($email){
         //, 'password'=> $data['password']
         $query = $this->db->get_where('users', array('email' => $email, 'utype'=> 'doctor'));
@@ -34,20 +28,9 @@ class Doctor_model extends CI_Model{
         return $query;
     }
     
-    function get_appt_single($data){
-    //, 'password'=> $data['password']
-        $query = $this->db->get_where('appt', array('user' => $data, 'astate' => 'booked'),1,0);
-        return $query;
-    }
-    
     function GetUser($email){
         $query = $this->db->get_where('users', array('email' => $email),1,0);
         return $query;
-    }
-    
-    function EditUser($email, $data){
-        $this->db->where('email', $email);
-        $this->db->update('users', $data);
     }
     
     function GetPatients(){
@@ -56,36 +39,18 @@ class Doctor_model extends CI_Model{
         return $query;
     }
     
-    function GetAdmins(){
-    //, 'password'=> $data['password']
-        $query = $this->db->get_where('users', array('utype'=> 'admin'));
-        return $query;
-    }
-    
     function Delete($id){
         $this->db->delete('appt', array('apptid' => $id));
     }
     
-    function UpdateDoctor($id, $data){
-        $this->db->where('id', $id);
-        $this->db->update('users', $data);
+    function GetDocPass($email){
+        $query = $this->db->get_where('users', array('email'=> $email));
+        return $query;
     }
     
-    function UpdatePatient($id, $data){
-        $this->db->where('id', $id);
-        $this->db->update('users', $data);
-    }
-    
-    function AddDoctor($data){
-        //$query = $this->db->get_where('users', array('email'=> $data['email'], 'password'=> $data['password']),1,0);
-        $this->db->insert('users', $data);
-        return $this->db->affected_rows();
-    }
-    
-    function AddAdmin($data){
-        //$query = $this->db->get_where('users', array('email'=> $data['email'], 'password'=> $data['password']),1,0);
-        $this->db->insert('users', $data);
-        return $this->db->affected_rows();
+    function UpdatePassword($e, $p){
+        $this->db->where('email', $e);
+        $this->db->update('users', array('password'=> $p));
     }
 }
 ?>    

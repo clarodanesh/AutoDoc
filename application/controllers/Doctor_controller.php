@@ -41,28 +41,18 @@ class Doctor_controller extends CI_Controller {
 	        }
 	        else if($this->session->uType == 'doctor'){
 	            $this->load->model('Doctor_model');
-	            $appts = $this->Doctor_model->GetDocAppts($this->session->email);
-	            $viewData['docEmail'] = $this->session->email;
-	            if($appts->num_rows() > 0){
-	                foreach ($appts->result() as $row){
-	                    $user = $this->Doctor_model->GetUser($row->user);
-	                    if($user->num_rows()>0){
-	                        foreach($user->result() as $row2){
-	                            $row->fname = $row2->firstname;
-	                            $row->lname = $row2->lastname;
-	                        }
-	                    }
-                        $data[] = $row;
-                    } 
-                  
-                    $viewData['appts'] = $data;
-	                $this->load->view('doctor_landing', $viewData);
-	                $this->load->view('footer', $viewData);
+	            $docs = $this->Doctor_model->GetDocPass($this->session->email);
+	            
+	            foreach ($docs->result() as $row){
+                    $data[] = $row;
+                } 
+	            
+	            if(password_verify('password', $data['0']->password)){
+	                $this->load->view('doctor_password_change');
 	            }else{
-	                $viewData['appts'] = "empty";
-	                $this->load->view('doctor_landing', $viewData);
-	                $this->load->view('footer', $viewData);
+	                $this->open();
 	            }
+ 
 	        }
 	        else if($this->session->uType == 'user'){
 	            $this->load->view('login');
@@ -75,6 +65,47 @@ class Doctor_controller extends CI_Controller {
 		    redirect('/Login_controller');
 	    }
 	} 
+	
+	public function open(){
+	$this->load->model('Doctor_model');
+	    $appts = $this->Doctor_model->GetDocAppts($this->session->email);
+	    $viewData['docEmail'] = $this->session->email;
+	    if($appts->num_rows() > 0){
+	        foreach ($appts->result() as $row){
+	            $user = $this->Doctor_model->GetUser($row->user);
+	            if($user->num_rows()>0){
+	              foreach($user->result() as $row2){
+	                 $row->fname = $row2->firstname;
+	                 $row->lname = $row2->lastname;
+	              }
+	            }
+                $data[] = $row;
+           } 
+                      
+          $viewData['appts'] = $data;
+	           $this->load->view('doctor_landing', $viewData);
+	          $this->load->view('footer', $viewData);
+	      }else{
+	           $viewData['appts'] = "empty";
+	          $this->load->view('doctor_landing', $viewData);
+	         $this->load->view('footer', $viewData);
+	      }                                                                   
+	}
+	
+	public function ChangePassword(){
+	        $this->load->model('Doctor_model');
+	        
+            $pass = $this->input->post('password');
+	        $passLen = strlen($pass);
+	        if($passLen > 6){
+	            $passHash = password_hash($pass, PASSWORD_BCRYPT);
+	            $this->Doctor_model->UpdatePassword($this->session->email, $passHash);
+	            redirect('/Doctor_controller');
+	        }else{
+	            $viewData['error'] = 'Password needs to be more than 6 characters';
+	            $this->load->view('doctor_password_change', $viewData);
+	        }       
+	}
 	
 	public function logout(){
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'doctor'){

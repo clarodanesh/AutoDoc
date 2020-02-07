@@ -307,3 +307,8 @@ body{
 #dob{
     width: 230px;
 }
+
+#admin-form-error{
+font-family: 'Ubuntu', sans-serif;
+    color: red;
+}

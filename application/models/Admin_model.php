@@ -48,5 +48,15 @@ class Admin_model extends CI_Model{
         $this->db->insert('users', $data);
         return $this->db->affected_rows();
     }
+    
+    function GetAdmPass($email){
+        $query = $this->db->get_where('users', array('email'=> $email));
+        return $query;
+    }
+    
+    function UpdatePassword($e, $p){
+        $this->db->where('email', $e);
+        $this->db->update('users', array('password'=> $p));
+    }
 }
 ?>    

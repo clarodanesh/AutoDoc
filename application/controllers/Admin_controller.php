@@ -37,8 +37,19 @@ class Admin_controller extends CI_Controller {
 	        //echo $this->session->email;
 	        //echo $this->session->uType;
 	        if($this->session->uType == 'admin'){
-	            $this->load->view('admin_panel');
-	            $this->load->view('admin_dashboard');
+	            $this->load->model('Admin_model');
+	            $admins = $this->Admin_model->GetAdmPass($this->session->email);
+	            
+	            foreach ($admins->result() as $row){
+                    $data[] = $row;
+                } 
+	            
+	            if(password_verify('password', $data['0']->password)){
+	                $this->load->view('admin_password_change');
+	            }else{
+	                $this->load->view('admin_panel');
+	                $this->load->view('admin_dashboard');
+	            }
 	        }
 	        else if($this->session->uType == 'doctor'){
 	            $this->load->view('login');
@@ -54,6 +65,21 @@ class Admin_controller extends CI_Controller {
 		    redirect('/Login_controller');
 	    }
 	} 
+	
+	public function ChangePassword(){
+	        $this->load->model('Admin_model');
+	        
+            $pass = $this->input->post('password');
+	        $passLen = strlen($pass);
+	        if($passLen > 6){
+	            $passHash = password_hash($pass, PASSWORD_BCRYPT);
+	            $this->Admin_model->UpdatePassword($this->session->email, $passHash);
+	            redirect('/Admin_controller');
+	        }else{
+	            $viewData['error'] = 'Password needs to be more than 6 characters';
+	            $this->load->view('admin_password_change', $viewData);
+	        }       
+	}
 	
 	public function logout(){
 	    if($this->session->has_userdata('email') && $this->session->has_userdata('uType') && $this->session->uType == 'admin'){
