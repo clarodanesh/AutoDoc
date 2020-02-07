@@ -95,6 +95,7 @@ class User_controller extends CI_Controller {
 	    $id = $this->uri->segment(3);
 	    $this->load->model('User_model');
 	    $this->User_model->Delete($id);
+	    redirect('/');
 	}
 	
 	private function _CheckDate($date){

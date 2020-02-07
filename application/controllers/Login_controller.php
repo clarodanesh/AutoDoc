@@ -37,7 +37,7 @@ class Login_controller extends CI_Controller {
 	            redirect('/Admin_controller');
 	        }
 	        else if($this->session->uType == 'doctor'){
-	            echo 'you are a doctor';
+	            redirect('/Doctor_controller');
 	        }
 	        else if($this->session->uType == 'user'){
 	            redirect('/User_controller');
