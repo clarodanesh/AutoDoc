@@ -36,16 +36,15 @@ class Register_controller extends CI_Controller {
 	            redirect('/Admin_controller');
 	        }
 	        else if($this->session->uType == 'doctor'){
-	            echo 'you are a doctor';
+	            redirect('/Doctor_controller');
 	        }
 	        else if($this->session->uType == 'user'){
-	            echo 'you are a user';
+	            redirect('/User_controller');
 	        }
 	        else{
 	            echo 'user type not recognised';
 	        }
 	    }else{
-	        echo 'not logged in';
 		    $this->load->view('register');
 	    }
 	}
@@ -61,6 +60,7 @@ class Register_controller extends CI_Controller {
 	    $firstname = filter_var($this->input->post('firstname'), FILTER_SANITIZE_STRING);
 	    $lastname = filter_var($this->input->post('lastname'), FILTER_SANITIZE_STRING);
 	    $passLength = strlen($password);
+	    $dob = $this->input->post('dob');
 	    
 	    if(filter_var($email, FILTER_VALIDATE_EMAIL) && $password && $firstname && $lastname && $passLength > 6){
 	        $passHash = password_hash($password, PASSWORD_BCRYPT);
@@ -71,6 +71,7 @@ class Register_controller extends CI_Controller {
 	                'password' => $passHash,
 	                'firstname' => $firstname,
 	                'lastname' => $lastname,
+	                'dob' => $dob,
 	                'utype' => 'user'
 	        );
 	        

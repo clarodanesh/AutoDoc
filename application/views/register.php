@@ -27,6 +27,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         
         <div class="auth-form-section">
+            <input class="auth-form-input" type="date" name="dob" id="dob" required>
+        </div>
+        
+        <div class="auth-form-section">
             <input class="auth-form-input" type="text" name="firstname" id="firstname" placeholder="Firstname" required>
         </div>
         
